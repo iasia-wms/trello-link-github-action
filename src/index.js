@@ -216,9 +216,11 @@ function getCard(cardIdentifier, board, apiKey, token) {
   );
   return axios
     .get(
-      `https://api.trello.com/1/boards/${encodeURIComponent(
-        board.boardId
-      )}/cards/${encodeURIComponent(cardIdentifier)}` +
+      `https://api.trello.com/1${
+        /^\d+$/.test(cardIdentifier)
+          ? "/boards/" + encodeURIComponent(board.boardId)
+          : ""
+      }/cards/${encodeURIComponent(cardIdentifier)}` +
         `?key=${encodeURIComponent(apiKey)}` +
         `&token=${encodeURIComponent(token)}`
     )
